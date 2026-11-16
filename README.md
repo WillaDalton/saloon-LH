@@ -45,6 +45,8 @@ Construire le frontend avec `cd frontend && npm ci && npm run build`, puis servi
 
 Installer le backend avec `cd backend && npm ci --omit=dev` et le démarrer avec `npm start`. Fournir `DATABASE_URL` via l'environnement du déploiement, avec l'URL PostgreSQL distante et les paramètres TLS requis par le fournisseur (par exemple `sslmode=verify-full`), ainsi que `PORT` si nécessaire. Ne pas utiliser les identifiants locaux en production ni commettre de fichier `.env`.
 
+La route de santé est limitée à 60 requêtes par minute et par adresse, en mémoire pour chaque instance de l'API. Derrière un proxy, l'adresse du proxy est utilisée par défaut : adapter la configuration de confiance Express à la topologie de déploiement si une limitation par client est nécessaire.
+
 ## Branches
 
 - `main` : code prêt pour la production.

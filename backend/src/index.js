@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const { rateLimit } = require('express-rate-limit')
 const { Pool } = require('pg')
 
 if (!process.env.DATABASE_URL) {
@@ -18,7 +19,7 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/api/health', async (_req, res) => {
+app.get('/api/health', rateLimit({ windowMs: 60_000, limit: 60 }), async (_req, res) => {
   try {
     await pool.query('SELECT 1')
     res.json({ status: 'ok' })
